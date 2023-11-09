@@ -21,11 +21,11 @@
             <!-- Logged In -->
 
             <div class="header__user">
-                <a href="profile.html">
+                @auth
+                <a href="{{route('profile.edit',auth()->user()->id)}}">
                     <div class="avatar avatar--medium active">
                         <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                     </div>
-                    @auth
                     <p>{{auth()->user()->name}}<span>{{auth()->user()->email}}</span></p>
                     @endauth
                 </a>

@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('rooms/', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('rooms', [RoomController::class, 'index'])->name('rooms.index');
-    Route::get('rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
+    Route::get('rooms/{slug}', [RoomController::class, 'show'])->name('rooms.show');
 
 
     Route::get('topics/', [TopicController::class, 'index'])->name('topics.index');
@@ -43,12 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::get('topics/{id}/rooms', [RoomController::class, 'roomSearch'])->name('topics.rooms');
 
 
-    Route::get('rooms/edit/{id}', [RoomController::class, 'edit'])->name('rooms.edit');
-    Route::put('rooms/update/{id}', [RoomController::class, 'update'])->name('rooms.update');
+    Route::get('rooms/edit/{slug}', [RoomController::class, 'edit'])->name('rooms.edit');
+    Route::put('rooms/{slug}', [RoomController::class, 'update'])->name('rooms.update');
 
 
-    Route::get('rooms/remove/{id}', [RoomController::class, 'remove'])->name('rooms.remove');
-    Route::post('rooms/delete/{id}', [RoomController::class, 'destroy'])->name('rooms.delete');
+    Route::get('rooms/remove/{slug}', [RoomController::class, 'remove'])->name('rooms.remove');
+    Route::post('rooms/delete/{slug}', [RoomController::class, 'destroy'])->name('rooms.delete');
 });
 
 

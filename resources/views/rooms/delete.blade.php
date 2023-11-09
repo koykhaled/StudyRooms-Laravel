@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="layout__body">
-                <form class="form" action="{{route('rooms.delete',$room->id)}}" method="POST">
+                <form class="form" action="{{route('rooms.delete',$room->slug)}}" method="POST">
                     @csrf
                     <div class="form__group">
                         <p>Are you sure you want to delete "{{$room->name}}"?</p>

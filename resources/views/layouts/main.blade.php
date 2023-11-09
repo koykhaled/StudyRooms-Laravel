@@ -30,6 +30,8 @@
 
     @yield('topics')
 
+    @yield('login')
+
 
     <script src="{{asset('js/script.js') }}"></script>
 </body>

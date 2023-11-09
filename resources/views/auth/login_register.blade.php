@@ -1,5 +1,5 @@
-{%include 'main.html'%}
-{%block content%}
+@extends('layouts.main')
+
 <main class="auth layout">
   {%if page == 'login'%}
   <div class="container">
@@ -11,9 +11,9 @@
       </div>
       <div class="layout__body">
         <h2 class="auth__tagline">Find your study partner</h2>
-
+        <x-auth-session-status class="mb-4" :status="session('status')" />
         <form class="form" action="" method="post">
-          {%csrf_token%}
+          @csrf
           <div class="form__group form__group">
             <label for="room_name">Username</label>
             <input id="username" name="username" type="text" placeholder="e.g. dennis_ivy" />
@@ -49,7 +49,7 @@
 
         <div class="auth__action">
           <p>Haven't signed up yet?</p>
-          <a href="{%url 'register'%}" class="btn btn--link">Sign Up</a>
+          <a href="{{route('register')}}" class="btn btn--link">Sign Up</a>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@
 
         <div class="auth__action">
           <p>Already Sign Up !</p>
-          <a href="{%url 'login-page'%}" class="btn btn--link">Login</a>
+          <a href="{{route('login')}}" class="btn btn--link">Login</a>
         </div>
       </div>
     </div>

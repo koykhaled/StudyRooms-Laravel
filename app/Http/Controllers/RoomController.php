@@ -47,7 +47,6 @@ class RoomController extends Controller
                 $results[] = ($room);
             }
             $room_count = count($rooms);
-            // $rooms = RoomResource::collection($results);
         }
         $topics = Topic::withCount('rooms')->limit(5)->get();
         $topics_count = count(Topic::all());
@@ -86,9 +85,9 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($slug)
     {
-        $room = Room::with('user', 'topic')->where('id', $id)->first();
+        $room = Room::with('user', 'topic')->where('slug', $slug)->first();
 
         return view('rooms.room', compact('room'));
     }
@@ -96,11 +95,11 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($slug)
     {
         //
 
-        $room = Room::with('user', 'topic')->where('id', $id)->first();
+        $room = Room::with('user', 'topic')->where('slug', $slug    )->first();
 
         return view('rooms.room_edit', compact('room'));
     }
@@ -108,11 +107,11 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
         //
 
-        $room = Room::find($id);
+        $room = Room::where('slug',$slug)->first();
 
         if ($room) {
             if ($room->user_id === Auth::id()) {
@@ -126,20 +125,19 @@ class RoomController extends Controller
     }
 
 
-    public function remove($id)
+    public function remove($slug)
     {
-        $room = Room::find($id);
+        $room = Room::where('slug',$slug)->first();
         return view('rooms.delete', compact('room'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($slug)
     {
         //
-        $room = Room::find($id);
-
+        $room = Room::where('slug',$slug)->first();
         if ($room) {
             if ($room->user_id === Auth::id()) {
                 $room->delete();

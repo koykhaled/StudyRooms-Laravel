@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="layout__body">
-                <form class="form" action="{{route('rooms.update',$room->id)}}" method="POST">
+                <form class="form" action="{{route('rooms.update',$room->slug)}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form__group">
@@ -37,7 +37,7 @@
                     <div class="form__group">
                         <label for="room_about">About</label>
                         <textarea name="description" id="room_about"
-                            placeholder="Write about your study group..." value="{{$room->description}}"></textarea>
+                            placeholder="Write about your study group..." value="{{$room->description}}">{{$room->description}}</textarea>
                     </div>
                     <div class="form__action">
                         <a class="btn btn--dark" href="{{route('rooms.index')}}">Cancel</a>
