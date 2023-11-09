@@ -8,6 +8,7 @@ use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RoomController extends Controller
 {
@@ -99,9 +100,14 @@ class RoomController extends Controller
     {
         //
 
+        
         $room = Room::with('user', 'topic')->where('slug', $slug    )->first();
+        if(Gate::allows('update',$room)){
+            return view('rooms.room_edit', compact('room'));
+        }else{
+            return to_route('rooms.show',['slug'=>$room->slug]);
+        }
 
-        return view('rooms.room_edit', compact('room'));
     }
 
     /**
@@ -114,11 +120,13 @@ class RoomController extends Controller
         $room = Room::where('slug',$slug)->first();
 
         if ($room) {
-            if ($room->user_id === Auth::id()) {
+            if (Gate::allows('update',$room)) {
                 $room->update([
-                    'name' => $request->name ?? $room->name,
+                'name' => $request->name ?? $room->name,
                     'description' => $request->description ?? $room->description
                 ]);
+                return to_route('rooms.index');
+            }else{
                 return to_route('rooms.index');
             }
         }
@@ -128,7 +136,12 @@ class RoomController extends Controller
     public function remove($slug)
     {
         $room = Room::where('slug',$slug)->first();
-        return view('rooms.delete', compact('room'));
+        if(Gate::allows('update',$room)){
+            return view('rooms.delete', compact('room'));
+        }else{
+            return to_route('rooms.show',['slug'=>$room->slug]);
+        }
+        
     }
 
     /**
@@ -140,8 +153,15 @@ class RoomController extends Controller
         $room = Room::where('slug',$slug)->first();
         if ($room) {
             if ($room->user_id === Auth::id()) {
+                
+            }
+        }
+        if ($room) {
+            if (Gate::allows('delete',$room)) {
                 $room->delete();
                 return to_route('rooms.index');
+            }else{
+                return to_route('rooms.show',['slug'=>$room->slug]);
             }
         }
     }
