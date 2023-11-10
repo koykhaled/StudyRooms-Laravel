@@ -2,7 +2,7 @@
     
     <div class="roomListRoom">
         <div class="roomListRoom__header">
-            <a href="{{route('profile.show',Auth::id())}}" class="roomListRoom__author">
+            <a href="{{route('profile.show',$room->user->id)}}" class="roomListRoom__author">
                 <div class="avatar avatar--small">
                     <img src="https://randomuser.me/api/portraits/women/11.jpg" />
                 </div>

@@ -10,17 +10,21 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Topic;
 use App\Models\Room;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function show(Request $request): View
+    public function show(Request $request,$id)
     {
         $topics = Topic::withCount('rooms')->get();
         $topics_count = count($topics);
-        $user = $request->user();
+        $user = User::find($id);
+        if(!$user){
+            return to_route('rooms.index');
+        }
         $rooms = Room::where('user_id',$user->id)->get();
         foreach($rooms as $room){
             $room['topic'] = Topic::find($room->topic_id)->name;

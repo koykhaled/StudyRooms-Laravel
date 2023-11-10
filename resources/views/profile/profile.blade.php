@@ -15,8 +15,8 @@
           </div>
         </div>
         <div class="profile__info">
-          <h3>{{auth()->user()->name}}</h3>
-          <p><span>@</span>{{auth()->user()->name}}</p>
+          <h3>{{$user->name}}</h3>
+          <p><span>@</span>{{$user->name}}</p>
           @if (request()->user() ==$user)
           <a href="{{route('profile.edit')}}" class="btn btn--main btn--pill">Edit Profile</a>
           <a href="{{route('profile.delete')}}" class="btn btn--main btn--pill" style="color: red;">Delete Profile</a>
@@ -34,7 +34,7 @@
 
       <div class="roomList__header">
         <div>
-          <h2>Study Rooms Hosted by {{auth()->user()->name}}</a>
+          <h2>Study Rooms Hosted by {{$user->name}}</a>
           </h2>
         </div>
       </div>
