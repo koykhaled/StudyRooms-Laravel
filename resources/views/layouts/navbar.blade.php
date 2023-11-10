@@ -22,7 +22,7 @@
 
             <div class="header__user">
                 @auth
-                <a href="{{route('profile.edit',auth()->user()->id)}}">
+                <a href="{{route('profile.show',auth()->user()->id)}}">
                     <div class="avatar avatar--medium active">
                         <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                     </div>

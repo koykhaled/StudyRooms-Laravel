@@ -13,6 +13,7 @@
 
 
     @include('layouts.navbar')
+    
 
     @yield('dashboard')
 
@@ -30,7 +31,7 @@
 
     @yield('topics')
 
-    @yield('login')
+    @yield('profile')
 
 
     <script src="{{asset('js/script.js') }}"></script>

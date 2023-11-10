@@ -8,17 +8,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Topic;
+use App\Models\Room;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function show(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $topics = Topic::withCount('rooms')->get();
+        $topics_count = count($topics);
+        $user = $request->user();
+        $rooms = Room::where('user_id',$user->id)->get();
+        foreach($rooms as $room){
+            $room['topic'] = Topic::find($room->topic_id)->name;
+        }
+        $room_count = count($rooms);
+        return view('profile.profile',compact('user','topics','topics_count','rooms','room_count'));
+    }
+
+    public function edit(Request $request){
+        $user = $request->user();
+        return view('profile.edit',compact('user'));
     }
 
     /**
@@ -34,12 +47,17 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
 
     /**
      * Delete the user's account.
      */
+    public function delete(Request $request){
+        $user = $request->user();
+        return view('profile.delete',compact('user'));
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
