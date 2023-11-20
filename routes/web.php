@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TopicController;
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('rooms/remove/{slug}', [RoomController::class, 'remove'])->name('rooms.remove');
     Route::post('rooms/delete/{slug}', [RoomController::class, 'destroy'])->name('rooms.delete');
+
+    Route::post('messages/{slug}', [MessageController::class, 'store'])->name('message.store');
+    Route::post('messages/delete/{id}', [MessageController::class, 'destroy'])->name('message.destroy');
 });
 
 

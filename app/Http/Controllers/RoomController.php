@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RoomResource;
+use App\Models\Message;
+use App\Models\Participant;
 use App\Models\Room;
 use App\Models\Topic;
 use App\Models\User;
@@ -86,11 +88,22 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $room = Room::with('user', 'topic')->where('slug', $slug)->first();
 
-        return view('rooms.room', compact('room'));
+        $messages = Message::where('room_id', $room->id)->get();
+
+        $participants = Participant::where('room_id', $room->id)->get();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $room->messages()->create([
+                'message' => $request->message
+            ]);
+            return to_route('rooms.show');
+        }
+
+        return view('rooms.room', compact('room', 'messages', 'participants'));
     }
 
     /**
@@ -100,12 +113,12 @@ class RoomController extends Controller
     {
         //
 
-        
-        $room = Room::with('user', 'topic')->where('slug', $slug    )->first();
-        if(Gate::allows('update',$room)){
+
+        $room = Room::with('user', 'topic')->where('slug', $slug)->first();
+        if (Gate::allows('update', $room)) {
             return view('rooms.room_edit', compact('room'));
-        }else{
-            return to_route('rooms.show',['slug'=>$room->slug]);
+        } else {
+            return to_route('rooms.show', ['slug' => $room->slug]);
         }
 
     }
@@ -117,16 +130,16 @@ class RoomController extends Controller
     {
         //
 
-        $room = Room::where('slug',$slug)->first();
+        $room = Room::where('slug', $slug)->first();
 
         if ($room) {
-            if (Gate::allows('update',$room)) {
+            if (Gate::allows('update', $room)) {
                 $room->update([
-                'name' => $request->name ?? $room->name,
+                    'name' => $request->name ?? $room->name,
                     'description' => $request->description ?? $room->description
                 ]);
                 return to_route('rooms.index');
-            }else{
+            } else {
                 return to_route('rooms.index');
             }
         }
@@ -135,13 +148,13 @@ class RoomController extends Controller
 
     public function remove($slug)
     {
-        $room = Room::where('slug',$slug)->first();
-        if(Gate::allows('update',$room)){
+        $room = Room::where('slug', $slug)->first();
+        if (Gate::allows('update', $room)) {
             return view('rooms.delete', compact('room'));
-        }else{
-            return to_route('rooms.show',['slug'=>$room->slug]);
+        } else {
+            return to_route('rooms.show', ['slug' => $room->slug]);
         }
-        
+
     }
 
     /**
@@ -150,18 +163,18 @@ class RoomController extends Controller
     public function destroy($slug)
     {
         //
-        $room = Room::where('slug',$slug)->first();
+        $room = Room::where('slug', $slug)->first();
         if ($room) {
             if ($room->user_id === Auth::id()) {
-                
+
             }
         }
         if ($room) {
-            if (Gate::allows('delete',$room)) {
+            if (Gate::allows('delete', $room)) {
                 $room->delete();
                 return to_route('rooms.index');
-            }else{
-                return to_route('rooms.show',['slug'=>$room->slug]);
+            } else {
+                return to_route('rooms.show', ['slug' => $room->slug]);
             }
         }
     }
@@ -171,7 +184,7 @@ class RoomController extends Controller
         $rooms = Topic::with('rooms')->where('id', $id)->get();
         $room_count = Room::count();
 
-        return view('index', compact('rooms',));
+        return view('index', compact('rooms', ));
     }
 
     public function search($q)

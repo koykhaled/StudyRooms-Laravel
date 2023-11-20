@@ -5,7 +5,7 @@
     <div class="layout__box">
       <div class="layout__boxHeader">
         <div class="layout__boxTitle">
-          <a href="{{route('rooms.index')}}">  
+          <a href="{{route('rooms.index')}}">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <title>arrow-left</title>
               <path
@@ -31,7 +31,7 @@
               <select id="room_topic">
                 @foreach ($topics as $topic)
                 <option value="{{$topic->name}}">
-                @endforeach
+                  @endforeach
               </select>
             </datalist>
 
