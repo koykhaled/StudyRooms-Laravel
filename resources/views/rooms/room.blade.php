@@ -77,7 +77,7 @@
                 </div>
                 <div class="room__conversation">
                   <div class="threads scroll">
-                    @foreach ($messages as $message)
+                    @foreach ($room->messages as $message)
                     <div class="thread">
                       <div class="thread__top">
                         <div class="thread__author">
@@ -129,16 +129,16 @@
 
         <!--   Start -->
         <div class="participants">
-            <h3 class="participants__top">Participants <span>({{count($participants)}} Joined)</span></h3>
+            <h3 class="participants__top">Participants <span>({{count($room->participants)}} Joined)</span></h3>
             <div class="participants__list scroll">
-              @foreach ($participants as $participant)
-                  <a href="{{route('profile.show',$participant->user_id)}}" class="participant">
+              @foreach ($room->participants as $participant)
+                  <a href="{{route('profile.show',$participant)}}" class="participant">
                     <div class="avatar avatar--medium">
                       <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                     </div>
                     <p>
-                      {{$participant->user->name}}
-                      <span><b>@</b>{{$participant->user->name}}</span>
+                      {{$participant->name}}
+                      <span><b>@</b>{{$participant->name}}</span>
                     </p>
                   </a>
               @endforeach

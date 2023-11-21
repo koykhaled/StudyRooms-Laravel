@@ -14,46 +14,35 @@ use Illuminate\Support\Facades\Gate;
 
 class RoomController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-
-
         if (isset($_GET['topic_id'])) {
             $id = $_GET['topic_id'];
-            // $topic = Topic::where('id', $id)->get();
             $rooms = Room::where('topic_id', $id)->get();
 
-            foreach ($rooms as $room) {
-                $user = User::find($room->user_id);
-                $topic = Topic::find($room->topic_id);
-                $room['user_name'] = $user->name;
-                $room['topic'] = $topic->name;
-                // $results[] = ($room);
-            }
-            $room_count = count($rooms);
         } elseif (isset($_GET['q'])) {
             $q = $_GET['q'];
             $rooms = $this->search($q);
             $room_count = count($rooms);
         } else {
             $rooms = Room::all();
-
-            foreach ($rooms as $room) {
-                $user = User::find($room->user_id);
-                $topic = Topic::find($room->topic_id);
-                $room['user_name'] = $user->name;
-                $room['topic'] = $topic->name;
-                $results[] = ($room);
-            }
-            $room_count = count($rooms);
         }
+
+        foreach ($rooms as $room) {
+            $user = User::find($room->user_id);
+            $topic = Topic::find($room->topic_id);
+            $room['user_name'] = $user->name;
+            $room['topic'] = $topic->name;
+        }
+        $room_count = count($rooms);
         $topics = Topic::withCount('rooms')->limit(5)->get();
         $topics_count = count(Topic::all());
-        return view('index', compact('rooms', 'room_count', 'topics', 'topics_count'));
+        $messages = Message::with('room', 'user')->orderBy("created_at", "desc")->limit(3)->get();
+        return view('index', compact('rooms', 'room_count', 'topics', 'topics_count', "messages"));
     }
 
     /**
@@ -90,20 +79,17 @@ class RoomController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        $room = Room::with('user', 'topic')->where('slug', $slug)->first();
 
-        $messages = Message::where('room_id', $room->id)->get();
-
-        $participants = Participant::where('room_id', $room->id)->get();
-
+        $room = Room::with('user', 'topic', 'messages', 'participants')
+            ->where('slug', $slug)->first();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $room->messages()->create([
                 'message' => $request->message
             ]);
-            return to_route('rooms.show');
+            return to_route('rooms.show', $room->slug);
         }
 
-        return view('rooms.room', compact('room', 'messages', 'participants'));
+        return view('rooms.room', compact('room'));
     }
 
     /**

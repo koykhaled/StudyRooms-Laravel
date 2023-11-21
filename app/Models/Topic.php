@@ -8,10 +8,19 @@ use Illuminate\Support\Str;
 
 class Topic extends Model
 {
+    private static $instance = null;
     use HasFactory;
     protected $fillable = [
         'name'
     ];
+
+    public static function getTopicInstance()
+    {
+        if (Topic::$instance === null) {
+            self::$instance = new Topic();
+            return self::$instance;
+        }
+    }
 
     protected static function boot()
     {
