@@ -20,26 +20,20 @@ class RoomController extends Controller
      */
     public function index()
     {
+        $init_room = Room::with('user', 'topic', 'participants');
         if (isset($_GET['topic_id'])) {
             $id = $_GET['topic_id'];
-            $rooms = Room::where('topic_id', $id)->get();
+            $rooms = $init_room->where('topic_id', $id)->get();
 
         } elseif (isset($_GET['q'])) {
             $q = $_GET['q'];
             $rooms = $this->search($q);
-            $room_count = count($rooms);
         } else {
-            $rooms = Room::all();
+            $rooms = $init_room->get();
         }
 
-        foreach ($rooms as $room) {
-            $user = User::find($room->user_id);
-            $topic = Topic::find($room->topic_id);
-            $room['user_name'] = $user->name;
-            $room['topic'] = $topic->name;
-        }
         $room_count = count($rooms);
-        $topics = Topic::withCount('rooms')->limit(5)->get();
+        $topics = Topic::withCount('rooms')->limit(3)->get();
         $topics_count = count(Topic::all());
         $messages = Message::with('room', 'user')->orderBy("created_at", "desc")->limit(3)->get();
         return view('index', compact('rooms', 'room_count', 'topics', 'topics_count', "messages"));
@@ -175,15 +169,7 @@ class RoomController extends Controller
 
     public function search($q)
     {
-
-        $rooms = Room::where('name', 'LIKE', "%$q%")->get();
-        foreach ($rooms as $room) {
-            $user = User::find($room->user_id);
-            $topic = Topic::find($room->topic_id);
-            $room['user_name'] = $user->name;
-            $room['topic'] = $topic->name;
-            $results[] = ($room);
-        }
+        $results = Room::with('user', 'topic', 'participants')->where('name', 'LIKE', "%$q%")->get();
         $rooms = RoomResource::collection($results);
         return $rooms;
     }

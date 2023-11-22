@@ -11,20 +11,12 @@ class Room extends Model
 {
     use HasFactory;
 
-    private static $instance = null;
     protected $fillable = [
         'name',
         'description',
         'topic_id'
     ];
 
-    public static function getRoomInstance()
-    {
-        if (is_null(self::$instance)) {
-            $instance = new Room();
-        }
-        return $instance;
-    }
 
 
     protected static function boot()

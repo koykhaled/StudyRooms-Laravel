@@ -12,15 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    private static $instance = null;
 
-    public static function getUserInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new User();
-            return self::$instance;
-        }
-    }
 
     /**
      * The attributes that are mass assignable.
