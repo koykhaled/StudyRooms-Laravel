@@ -65,7 +65,11 @@
                         <p>Hosted By</p>
                         <a href="#" class="room__author">
                             <div class="avatar avatar--small">
-                                <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                                @if ($room->user->photo == null)
+                                <img src="{{asset('assets/avatar.svg')}}" />
+                                @else
+                                <img src="{{asset($room->user->photo)}}" />
+                                @endif
                             </div>
                             <span>{{$room->user->name}}</span>
                         </a>
@@ -76,52 +80,56 @@
                     <span class="room__topics">{{$room->topic->name}}</span>
                 </div>
                 <div class="room__conversation">
-                  <div class="threads scroll">
-                    @foreach ($room->messages as $message)
-                    <div class="thread">
-                      <div class="thread__top">
-                        <div class="thread__author">
-                          <a href="{{route('profile.show',$message->user_id)}}" class="thread__authorInfo">
-                            <div class="avatar avatar--small">
-                              <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                    <div class="threads scroll">
+                        @foreach ($room->messages as $message)
+                        <div class="thread">
+                            <div class="thread__top">
+                                <div class="thread__author">
+                                    <a href="{{route('profile.show',$message->user_id)}}" class="thread__authorInfo">
+                                        <div class="avatar avatar--small">
+                                           @if ($message->user->photo == null)
+											<img src="{{asset('assets/avatar.svg')}}" />
+											@else
+											<img src="{{asset($message->user->photo)}}" />
+											@endif
+                                        </div>
+                                        <span>{{$message->user->name}}</span>
+                                    </a>
+                                    <span class="thread__date">{{$message->created_at}}</span>
+                                </div>
+                                @if (Auth::id() == $message->user_id)
+                                <div class="thread__delete">
+                                    <a href="{{route('message.destroy',$message->id)}}"
+                                        onclick="event.preventDefault(); document.getElementById('delete_message').submit();"
+                                        title="delete_message">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            viewBox="0 0 32 32">
+                                            <title>remove</title>
+                                            <path
+                                                d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                    <form id="delete_message" method="post"
+                                        action="{{route('message.destroy',$message->id)}}">
+                                        @csrf
+                                    </form>
+                                </div>
+                                @endif
                             </div>
-                            <span>{{$message->user->name}}</span>
-                          </a>
-                          <span class="thread__date">{{$message->created_at}}</span>
+                            <div class="thread__details">
+                                {{$message->message}}
+                            </div>
                         </div>
-                        @if (Auth::id() == $message->user_id)
-                        <div class="thread__delete">
-                          <a href="{{route('message.destroy',$message->id)}}"
-                            onclick="event.preventDefault(); document.getElementById('delete_message').submit();"
-                            title="delete_message"
-                            >
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                              viewBox="0 0 32 32">
-                              <title>remove</title>
-                              <path
-                                d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z">
-                              </path>
-                            </svg>
-                          </a>
-                          <form id="delete_message" method="post" action="{{route('message.destroy',$message->id)}}">
-                            @csrf
-                          </form>
-                        </div>
-                        @endif
-                      </div>
-                      <div class="thread__details">
-                        {{$message->message}}
-                      </div>
+                        @endforeach
+
                     </div>
-                    @endforeach
-                
-                  </div>
                 </div>
             </div>
             <div class="room__message">
                 <form method="POST" action="{{route('message.store',$room->slug)}}">
-                  @csrf
-                  <input name="message" placeholder="Write your message here..." />
+                    @csrf
+                    <input name="message" placeholder="Write your message here..." />
                 </form>
             </div>
         </div>
@@ -131,18 +139,22 @@
         <div class="participants">
             <h3 class="participants__top">Participants <span>({{count($room->participants)}} Joined)</span></h3>
             <div class="participants__list scroll">
-              @foreach ($room->participants as $participant)
-                  <a href="{{route('profile.show',$participant)}}" class="participant">
+                @foreach ($room->participants as $participant)
+                <a href="{{route('profile.show',$participant)}}" class="participant">
                     <div class="avatar avatar--medium">
-                      <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                        @if ($participant->photo == null)
+						<img src="{{asset('assets/avatar.svg')}}" />
+						@else
+						<img src="{{asset($participant->photo)}}" />
+						@endif
                     </div>
                     <p>
-                      {{$participant->name}}
-                      <span><b>@</b>{{$participant->name}}</span>
+                        {{$participant->name}}
+                        <span><b>@</b>{{$participant->name}}</span>
                     </p>
-                  </a>
-              @endforeach
-                
+                </a>
+                @endforeach
+
             </div>
         </div>
         <!--  End -->

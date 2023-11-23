@@ -4,7 +4,11 @@
         <div class="roomListRoom__header">
             <a href="{{route('profile.show',$room->user->id)}}" class="roomListRoom__author">
                 <div class="avatar avatar--small">
-                    <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+                    @if ($room->user->photo == null)
+                        <img src="{{asset('assets/avatar.svg')}}" />
+                    @else
+                        <img src="{{asset($room->user->photo)}}" />
+                    @endif
                 </div>
                 <span>{{$room->user->name}}</span>
             </a>

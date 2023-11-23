@@ -4,7 +4,7 @@
         <div class="layout__box">
             <div class="layout__boxHeader">
                 <div class="layout__boxTitle">
-                    <a href="{profile.html}">
+                    <a href="{{route('profile.show',$user->id)}}">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 32 32">
                             <title>arrow-left</title>
@@ -17,7 +17,8 @@
                 </div>
             </div>
             <div class="layout__body">
-                <form class="form" action="{{ route('profile.update') }}" method="post">
+                <form class="form" action="{{ route('profile.update',$user->id) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('patch')
                     {{-- Name --}}
@@ -27,7 +28,7 @@
                             :value="old('name', $user->name)" required
                             autofocus autocomplete="name" />
                         <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                        </div>
+                    </div>
 
                     {{-- Email --}}
                     <div class="form__group">
@@ -36,24 +37,49 @@
                             :value="old('email', $user->email)"
                             required autocomplete="username" />
                         <x-input-error class="mt-2" :messages="$errors->get('email')" />
-                        
+
                         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                         <div>
                             <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                                 {{ __('Your email address is unverified.') }}
-                        
+
                                 <button form="send-verification"
                                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                                     {{ __('Click here to re-send the verification email.') }}
                                 </button>
                             </p>
-                        
+
                             @if (session('status') === 'verification-link-sent')
                             <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
                                 {{ __('A new verification link has been sent to your email address.') }}
                             </p>
                             @endif
                             @endif
+                        </div>
+                        {{-- Description --}}
+                        <div class="form__group">
+                            <x-input-label for="description" :value="__('Description')" />
+                            <x-text-input id="description" name="description" type="text" class="mt-1 block w-full"
+                                :value="old('description', $user->description)"
+                                autofocus autocomplete="description" />
+                            <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                        </div>
+
+                     
+                            <div class="avatar avatar--large active">
+                                @if ($user->photo == null)
+                                <img src="{{asset('assets/avatar.svg')}}" />
+                                @else
+                                <img src="{{asset("$user->photo")}}" />
+                                @endif
+                            </div>
+                        <div class="form__group">
+
+                            <x-input-label for="photo" :value="__('Photo')" />
+                            <x-text-input id="photo" name="photo" type="file" class="mt-1 block w-full"
+                                :value="old('photo', $user->photo)"
+                                autofocus autocomplete="photo" enctype="multipart/form-data" />
+                            <x-input-error class="mt-2" :messages="$errors->get('photo')" />
                         </div>
 
                         <div class="form__action">
@@ -62,7 +88,7 @@
                         </div>
                 </form>
 
-                
+
             </div>
         </div>
     </div>

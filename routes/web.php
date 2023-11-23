@@ -31,10 +31,10 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
+    Route::get('/profile/{id}/delete', [ProfileController::class, 'delete'])->name('profile.delete');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/', [HomeController::class, 'redirect']);
     Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');

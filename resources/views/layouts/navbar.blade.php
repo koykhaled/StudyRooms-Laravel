@@ -24,7 +24,11 @@
                 @auth
                 <a href="{{route('profile.show',auth()->user()->id)}}">
                     <div class="avatar avatar--medium active">
-                        <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                        @if (auth()->user()->photo == null)
+                        <img src="{{asset('assets/avatar.svg')}}" />
+                        @else
+                        <img src="{{asset(auth()->user()->photo)}}" />
+                        @endif
                     </div>
                     <p>{{auth()->user()->name}}<span>{{auth()->user()->email}}</span></p>
                     @endauth
@@ -46,14 +50,13 @@
                         </path>
                     </svg>
                     Settings</a>
-                    <a title="logout" href="{{route('logout')}}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                    <form id="logout-form" action="{{route('logout')}}" method="post">
-                        @csrf
-                    </div>
-                    </form>
-                    
+                <a title="logout" href="{{route('logout')}}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{route('logout')}}" method="post">
+                    @csrf
+            </div>
+            </form>
+
         </nav>
     </div>
 </header>
-

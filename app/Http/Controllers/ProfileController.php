@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Trait\UploadImageTrait;
 use App\Models\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
+    use UploadImageTrait;
     /**
      * Display the user's profile form.
      */
@@ -27,6 +29,11 @@ class ProfileController extends Controller
         $user = User::find($id);
 
 
+        if (!$user) {
+            return to_route('rooms.index');
+        }
+
+
 
         $room_count = count($rooms);
         $topics = Topic::withCount('rooms')->limit(3)->get();
@@ -35,34 +42,38 @@ class ProfileController extends Controller
         return view('profile.profile', compact('user', 'topics', 'topics_count', 'rooms', 'room_count', 'messages'));
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
-        $user = $request->user();
+        $user = User::find($id);
         return view('profile.edit', compact('user'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, $id)
     {
-        $request->user()->fill($request->validated());
+        $user = User::find($id);
+        $user->name = $request->name ?? $user->name;
+        $user->email = $request->email ?? $user->email;
+        $user->description = $request->description ?? $user->description;
+        $this->uploadImage($request, "photo", $user, "profile/");
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
-        return Redirect::route('profile.show')->with('status', 'profile-updated');
+        return to_route('profile.show', $request->user()->id)->with('status', 'profile-updated');
     }
 
     /**
      * Delete the user's account.
      */
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        $user = $request->user();
+        $user = User::find($id);
         return view('profile.delete', compact('user'));
     }
 
