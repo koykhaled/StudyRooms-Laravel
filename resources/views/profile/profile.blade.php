@@ -22,8 +22,8 @@
                     <h3>{{$user->name}}</h3>
                     <p><span>@</span>{{$user->name}}</p>
                     @if (request()->user() ==$user)
-                    <a href="{{route('profile.edit',$user->id)}}" class="btn btn--main btn--pill">Edit Profile</a>
-                    <a href="{{route('profile.delete',$user->id)}}" class="btn btn--main btn--pill" style="color: red;">Delete
+                    <a href="{{route('profile.edit',$user->uuid)}}" class="btn btn--main btn--pill">Edit Profile</a>
+                    <a href="{{route('profile.delete',$user->uuid)}}" class="btn btn--main btn--pill" style="color: red;">Delete
                         Profile</a>
                     @endif
                 </div>

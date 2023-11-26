@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="layout__body">
-                <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                <form method="post" action="{{ route('profile.destroy',$user->uuid) }}" class="p-6">
                     @csrf
                     @method('delete')
 

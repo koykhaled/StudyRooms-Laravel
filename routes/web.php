@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/profile/{id}/delete', [ProfileController::class, 'delete'])->name('profile.delete');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/', [HomeController::class, 'redirect']);
     Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('rooms/', [RoomController::class, 'store'])->name('rooms.store');

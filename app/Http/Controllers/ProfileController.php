@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         $rooms = $init_room->where('user_id', $id)->get();
 
-        $user = User::find($id);
+        $user = User::where('uuid', $id)->first();
 
 
         if (!$user) {
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::where('uuid', $id)->first();
         return view('profile.edit', compact('user'));
     }
 
@@ -53,7 +53,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request, $id)
     {
-        $user = User::find($id);
+        $user = User::where('uuid', $id)->first();
         $user->name = $request->name ?? $user->name;
         $user->email = $request->email ?? $user->email;
         $user->description = $request->description ?? $user->description;
@@ -65,7 +65,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return to_route('profile.show', $request->user()->id)->with('status', 'profile-updated');
+        return to_route('profile.show', $request->user()->uuid)->with('status', 'profile-updated');
     }
 
     /**
@@ -73,17 +73,17 @@ class ProfileController extends Controller
      */
     public function delete(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::where('uuid', $id)->first();
         return view('profile.delete', compact('user'));
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, $id): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
 
-        $user = $request->user();
+        $user = User::where('uuid', $id)->first();
 
         Auth::logout();
 

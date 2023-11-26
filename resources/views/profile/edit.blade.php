@@ -1,7 +1,7 @@
 @include('layouts.main')
 <main class="update-account layout">
     <div class="container">
-        <div class="layout__box">
+        <div class="layout__box" id="edit_box">
             <div class="layout__boxHeader">
                 <div class="layout__boxTitle">
                     <a href="{{route('profile.show',$user->id)}}">
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="layout__body">
-                <form class="form" action="{{ route('profile.update',$user->id) }}" method="post"
+                <form class="form" action="{{ route('profile.update',$user->uuid) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('patch')
@@ -65,14 +65,14 @@
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
                         </div>
 
-                     
-                            <div class="avatar avatar--large active">
-                                @if ($user->photo == null)
-                                <img src="{{asset('assets/avatar.svg')}}" />
-                                @else
-                                <img src="{{asset("$user->photo")}}" />
-                                @endif
-                            </div>
+
+                        <div class="avatar avatar--large active">
+                            @if ($user->photo == null)
+                            <img src="{{asset('assets/avatar.svg')}}" />
+                            @else
+                            <img src="{{asset($user->photo)}}" />
+                            @endif
+                        </div>
                         <div class="form__group">
 
                             <x-input-label for="photo" :value="__('Photo')" />

@@ -2,7 +2,7 @@
     <div class="container">
         <a href="/" class="header__logo">
             <img src="{{asset('assets/logo.svg')}}" />
-            <h1>StudyBuddy</h1>
+            <h1>Study Rooms</h1>
         </a>
         <form class="header__search" method="get" action="{{route('rooms.index')}}">
             <label>
@@ -22,7 +22,7 @@
 
             <div class="header__user">
                 @auth
-                <a href="{{route('profile.show',auth()->user()->id)}}">
+                <a href="{{route('profile.show',auth()->user()->uuid)}}">
                     <div class="avatar avatar--medium active">
                         @if (auth()->user()->photo == null)
                         <img src="{{asset('assets/avatar.svg')}}" />
@@ -42,7 +42,7 @@
             </div>
 
             <div class="dropdown-menu">
-                <a href="settings.html" class="dropdown-link"><svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                <a href="{{route('profile.show',auth()->user()->uuid)}}" class="dropdown-link"><svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                         width="32" height="32" viewBox="0 0 32 32">
                         <title>tools</title>
                         <path

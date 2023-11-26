@@ -32,7 +32,7 @@ class MessageController extends Controller
         ]);
 
         if (!$room->participants()->exists($user->id)) {
-            $room->participants()->attach($user->id);
+            $user->participants()->attach($room->id);
         }
         return to_route('rooms.show', $room->slug);
     }
