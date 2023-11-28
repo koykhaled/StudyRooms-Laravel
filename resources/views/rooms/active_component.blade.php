@@ -5,7 +5,7 @@
     @foreach ($messages as $message)
     <div class="activities__box">
         <div class="activities__boxHeader roomListRoom__header">
-            <a href="{{route('profile.show',$message->user_id)}}" class="roomListRoom__author">
+            <a href="{{route('profile.show',$message->user->uuid)}}" class="roomListRoom__author">
                 <div class="avatar avatar--small">
                     @if ($message->user->photo == null)
                     <img src="{{asset('assets/avatar.svg')}}" />
@@ -38,7 +38,7 @@
             @endif
         </div>
         <div class="activities__boxContent">
-            <p>replied to post “<a href="room.html">{{$message->room->name}}</a>”</p>
+            <p>replied to post “<a href="{{route('rooms.show',$message->room->slug)}}">{{$message->room->name}}</a>”</p>
             <div class="activities__boxRoomContent">
                 {{$message->message}}
             </div>

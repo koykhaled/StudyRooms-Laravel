@@ -62,6 +62,7 @@ class RoomController extends Controller
                 'description' => $request->description,
                 'topic_id' => $topic->id
             ]);
+            notify()->success('Room Created Successfully');
             return to_route('rooms.index');
         } else {
             return to_route('login');
@@ -152,21 +153,13 @@ class RoomController extends Controller
         if ($room) {
             if (Gate::allows('delete', $room)) {
                 $room->delete();
+                notify()->success('Room Deleted Successfully');
                 return to_route('rooms.index');
             } else {
                 return to_route('rooms.show', ['slug' => $room->slug]);
             }
         }
     }
-
-    public function roomSearch($id)
-    {
-        $rooms = Topic::with('rooms')->where('id', $id)->get();
-        $room_count = Room::count();
-
-        return view('index', compact('rooms', ));
-    }
-
     public function search($q)
     {
         $results = Room::with('user', 'topic', 'participants')->where('name', 'LIKE', "%$q%")->get();

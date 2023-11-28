@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
+    notify()->success("Khaled Is here");
     return view('welcome');
 });
 
@@ -39,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'redirect']);
     Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('rooms/', [RoomController::class, 'store'])->name('rooms.store');
-    Route::get('rooms', [RoomController::class, 'index'])->name('rooms.index');
+    Route::get('', [RoomController::class, 'index'])->name('rooms.index');
     Route::get('rooms/{slug}', [RoomController::class, 'show'])->name('rooms.show');
 
 
@@ -60,6 +61,12 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+Route::get('notifiy', function () {
+    notify()->success("Ok");
+    return view('welcome');
+
+});
 
 
 

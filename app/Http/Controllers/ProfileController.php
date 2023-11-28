@@ -64,6 +64,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
+        notify()->preset('user-updated');
 
         return to_route('profile.show', $request->user()->uuid)->with('status', 'profile-updated');
     }
@@ -91,6 +92,7 @@ class ProfileController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        notify()->success("Your Account Deleted Successfully");
 
         return Redirect::to('/');
     }

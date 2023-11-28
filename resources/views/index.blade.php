@@ -5,10 +5,11 @@
         {{-- Topics Start --}}
         @include('rooms.tobics_component')
         {{--
-    <!-- Topics End --> --}}
+        <!-- Topics End --> --}}
 
         {{--
-    <!-- Room List Start --> --}}
+        <!-- Room List Start --> --}}
+        
         <div class="roomList">
             <div class="mobile-menu">
                 <form action="{% url 'home' %}" method="get" class="header__search">
@@ -44,6 +45,7 @@
                 </a>
             </div>
             @include('rooms.room_component')
+            <x-notify::notify />
         </div>
         {{-- Room List End --}}
 

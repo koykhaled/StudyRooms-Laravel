@@ -7,7 +7,7 @@
             <div class="layout__box">
                 <div class="layout__boxHeader">
                     <div class="layout__boxTitle">
-                        <h3>Login</h3>
+                        <h3>Register</h3>
                     </div>
                 </div>
                 <div class="layout__body">
@@ -17,37 +17,39 @@
                         <div class="form__group">
                             {{-- Name --}}
                             <x-input-label for="name" :value="__('Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
+                                :value="old('name')" required autofocus
                                 autocomplete="name" />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
-                                {{-- Email --}}
-                                <x-input-label for="email" :value="__('Email')" />
-                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                                    autocomplete="username" />
-                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            {{-- Email --}}
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
+                                :value="old('email')" required
+                                autocomplete="username" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
-                                {{-- Password --}}
-                                <x-input-label for="password" :value="__('Password')" />
-                                
-                                <x-text-input id="password" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password"
-                                    required autocomplete="new-password" />
-                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            {{-- Password --}}
+                            <x-input-label for="password" :value="__('Password')" />
 
-                                    {{-- Password Confirmation --}}
-                                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                
-                                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required autocomplete="new-password" />
-                                
-                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                            <x-text-input id="password" class="block mt-1 w-full"
+                                type="password"
+                                name="password"
+                                required autocomplete="new-password" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+
+                            {{-- Password Confirmation --}}
+                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                name="password_confirmation" required autocomplete="new-password" />
+
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 
                         </div>
-        
-        
+
+
                         <button class="btn btn--main" type="submit">
                             <svg
                                 version="1.1"
@@ -63,11 +65,11 @@
                                     d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z">
                                 </path>
                             </svg>
-        
+
                             Register
                         </button>
                     </form>
-        
+
                     <div class="auth__action">
                         <p>Already Sign Up !</p>
                         <a href="{{route('login')}}" class="btn btn--link">Login</a>

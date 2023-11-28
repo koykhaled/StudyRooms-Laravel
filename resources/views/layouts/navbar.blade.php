@@ -22,6 +22,7 @@
 
             <div class="header__user">
                 @auth
+                <a href="#">Notifications</a>
                 <a href="{{route('profile.show',auth()->user()->uuid)}}">
                     <div class="avatar avatar--medium active">
                         @if (auth()->user()->photo == null)

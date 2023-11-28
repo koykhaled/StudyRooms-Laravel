@@ -5,20 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $messages = Message::with('room', 'user')->orderBy("created_at", "desc")->limit(5)->get();
-        return view("rooms.active_component", compact("messages"));
-
-    }
-
-
     /**
      * Store a newly created resource in storage.
      */
@@ -31,8 +21,8 @@ class MessageController extends Controller
             'room_id' => $room->id,
         ]);
 
-        if (!$room->participants()->exists($user->id)) {
-            $user->participants()->attach($room->id);
+        if (!$room->participants()->where('user_id', $user->id)->exists()) {
+            $room->participants()->attach($user->id);
         }
         return to_route('rooms.show', $room->slug);
     }
@@ -42,9 +32,13 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
+        $user = auth()->user();
         $message = Message::where('id', $id)->first();
         $room = Room::where('id', $message->room_id)->first();
         $message->delete();
+        if (!Message::where('user_id', $user->id)->exists()) {
+            $room->participants()->detach($user->id);
+        }
         return to_route('rooms.show', $room->slug);
 
     }

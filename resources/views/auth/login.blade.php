@@ -1,10 +1,12 @@
 <x-guest-layout>
     @section('title')
-        Login
+    Login
     @endsection
     <main class="auth layout">
+
         <div class="container">
             <div class="layout__box">
+
                 <div class="layout__boxHeader">
                     <div class="layout__boxTitle">
                         <h3>Login</h3>
@@ -17,7 +19,7 @@
                         @csrf
                         <div class="form__group form__group">
                             <label for="room_name">Email</label>
-                            <input id="email" name="email" type="text" placeholder="e.g. dennis_ivy@gmail.com" />
+                            <input id="email" name="email" type="text" placeholder="e.g. khaled@example.com" />
                         </div>
                         <div class="form__group">
                             <label for="password">Password</label>
@@ -27,7 +29,7 @@
                                 type="password"
                                 placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
                         </div>
-    
+
                         <button class="btn btn--main" type="submit">
                             <svg
                                 version="1.1"
@@ -43,17 +45,19 @@
                                     d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z">
                                 </path>
                             </svg>
-    
+
                             Login
                         </button>
                     </form>
-    
+
                     <div class="auth__action">
                         <p>Haven't signed up yet?</p>
                         <a href="{{route('register')}}" class="btn btn--link">Sign Up</a>
                     </div>
+                    <x-notify::notify />
                 </div>
             </div>
+            @notifyJs
         </div>
     </main>
 </x-guest-layout>

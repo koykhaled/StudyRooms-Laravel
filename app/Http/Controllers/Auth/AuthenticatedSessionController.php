@@ -29,7 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        notify()->success('Login Done Successfully');
+
+        return to_route('rooms.index');
     }
 
     /**

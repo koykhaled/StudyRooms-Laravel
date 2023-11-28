@@ -7,14 +7,17 @@
         <!-- Topics End -->
 
         <!-- Room List Start -->
+
         <div class="roomList">
+            <x-notify::notify />
             <div class="profile">
+
                 <div class="profile__avatar">
                     <div class="avatar avatar--large active">
                         @if ($user->photo == null)
-                            <img src="{{asset('assets/avatar.svg')}}" />
-                        @else 
-                            <img src="{{asset($user->photo)}}" />
+                        <img src="{{asset('assets/avatar.svg')}}" />
+                        @else
+                        <img src="{{asset($user->photo)}}" />
                         @endif
                     </div>
                 </div>
@@ -23,7 +26,8 @@
                     <p><span>@</span>{{$user->name}}</p>
                     @if (request()->user() ==$user)
                     <a href="{{route('profile.edit',$user->uuid)}}" class="btn btn--main btn--pill">Edit Profile</a>
-                    <a href="{{route('profile.delete',$user->uuid)}}" class="btn btn--main btn--pill" style="color: red;">Delete
+                    <a href="{{route('profile.delete',$user->uuid)}}" class="btn btn--main btn--pill"
+                        style="color: red;">Delete
                         Profile</a>
                     @endif
                 </div>
