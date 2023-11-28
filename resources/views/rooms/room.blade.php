@@ -6,6 +6,7 @@
         <div class="room">
             <div class="room__top">
                 <div class="room__topLeft">
+                    <x-notify::notify />
                     <a href="{{route('rooms.index')}}">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 32 32">
@@ -63,7 +64,7 @@
                     </div>
                     <div class="room__hosted">
                         <p>Hosted By</p>
-                        <a href="#" class="room__author">
+                        <a href="{{route('profile.show',$room->user->uuid)}}" class="room__author">
                             <div class="avatar avatar--small">
                                 @if ($room->user->photo == null)
                                 <img src="{{asset('assets/avatar.svg')}}" />
@@ -87,11 +88,11 @@
                                 <div class="thread__author">
                                     <a href="{{route('profile.show',$message->user_id)}}" class="thread__authorInfo">
                                         <div class="avatar avatar--small">
-                                           @if ($message->user->photo == null)
-											<img src="{{asset('assets/avatar.svg')}}" />
-											@else
-											<img src="{{asset($message->user->photo)}}" />
-											@endif
+                                            @if ($message->user->photo == null)
+                                            <img src="{{asset('assets/avatar.svg')}}" />
+                                            @else
+                                            <img src="{{asset($message->user->photo)}}" />
+                                            @endif
                                         </div>
                                         <span>{{$message->user->name}}</span>
                                     </a>
@@ -143,10 +144,10 @@
                 <a href="{{route('profile.show',$participant)}}" class="participant">
                     <div class="avatar avatar--medium">
                         @if ($participant->photo == null)
-						<img src="{{asset('assets/avatar.svg')}}" />
-						@else
-						<img src="{{asset($participant->photo)}}" />
-						@endif
+                        <img src="{{asset('assets/avatar.svg')}}" />
+                        @else
+                        <img src="{{asset($participant->photo)}}" />
+                        @endif
                     </div>
                     <p>
                         {{$participant->name}}

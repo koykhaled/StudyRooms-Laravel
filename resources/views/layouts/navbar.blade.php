@@ -23,6 +23,7 @@
             <div class="header__user">
                 @auth
                 <a href="#">Notifications</a>
+
                 <a href="{{route('profile.show',auth()->user()->uuid)}}">
                     <div class="avatar avatar--medium active">
                         @if (auth()->user()->photo == null)
@@ -42,8 +43,10 @@
                 </button>
             </div>
 
+
             <div class="dropdown-menu">
-                <a href="{{route('profile.show',auth()->user()->uuid)}}" class="dropdown-link"><svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                <a href="{{route('profile.show',auth()->user()->uuid)}}" class="dropdown-link"><svg version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
                         width="32" height="32" viewBox="0 0 32 32">
                         <title>tools</title>
                         <path
@@ -55,8 +58,8 @@
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{route('logout')}}" method="post">
                     @csrf
+                </form>
             </div>
-            </form>
 
         </nav>
     </div>

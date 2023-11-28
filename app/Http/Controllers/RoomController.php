@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Message;
 use App\Models\Participant;
@@ -18,15 +19,15 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $init_room = Room::with('user', 'topic', 'participants');
-        if (isset($_GET['topic_id'])) {
-            $id = $_GET['topic_id'];
+        if ($request->has('topic_id')) {
+            $id = $request->query('topic_id');
             $rooms = $init_room->where('topic_id', $id)->get();
 
-        } elseif (isset($_GET['q'])) {
-            $q = $_GET['q'];
+        } elseif ($request->has('q')) {
+            $q = $request->query('q');
             $rooms = $this->search($q);
         } else {
             $rooms = $init_room->get();
@@ -51,7 +52,7 @@ class RoomController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoomRequest $request)
     {
         //
         $user = User::find(Auth::id());
@@ -119,7 +120,8 @@ class RoomController extends Controller
                     'name' => $request->name ?? $room->name,
                     'description' => $request->description ?? $room->description
                 ]);
-                return to_route('rooms.index');
+                notify()->success('Room Updated Successfully');
+                return to_route('rooms.show', $room->slug);
             } else {
                 return to_route('rooms.index');
             }

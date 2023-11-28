@@ -29,7 +29,8 @@
 
                     <div class="form__group">
                         <label for="room_topic">Topic</label>
-                        <input required type="text" name="topic" id="room_topic" list="topic-list" value="{{$room->topic->name}}" readonly/>
+                        <input required type="text" name="topic" id="room_topic" list="topic-list"
+                            value="{{$room->topic->name}}" readonly />
 
                     </div>
 
@@ -37,11 +38,12 @@
                     <div class="form__group">
                         <label for="room_about">About</label>
                         <textarea name="description" id="room_about"
-                            placeholder="Write about your study group..." value="{{$room->description}}">{{$room->description}}</textarea>
+                            placeholder="Write about your study group..."
+                            value="{{$room->description}}">{{$room->description}}</textarea>
                     </div>
                     <div class="form__action">
                         <a class="btn btn--dark" href="{{route('rooms.index')}}">Cancel</a>
-                        <button class="btn btn--main" type="submit">Create Room</button>
+                        <button class="btn btn--main" type="submit">Update Room</button>
                     </div>
                 </form>
             </div>

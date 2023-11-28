@@ -20,53 +20,89 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/welcome', function () {
-    notify()->success("Khaled Is here");
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
-    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
-
-    Route::get('/profile/{id}/delete', [ProfileController::class, 'delete'])->name('profile.delete');
-    Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+/*
+|--------------------------------------------------------------------------
+| Profile Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage user profile by update , show and delete user profile
+*/
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'redirect']);
-    Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
-    Route::post('rooms/', [RoomController::class, 'store'])->name('rooms.store');
-    Route::get('', [RoomController::class, 'index'])->name('rooms.index');
-    Route::get('rooms/{slug}', [RoomController::class, 'show'])->name('rooms.show');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Profile Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can manage user profile by update , show and delete user profile
+    */
+
+    Route::group(['prefix' => 'profile'], function () {
+
+        Route::get('/{id}', [ProfileController::class, 'show'])->name('profile.show');
+
+        Route::get('/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/{id}', [ProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/{id}/delete', [ProfileController::class, 'delete'])->name('profile.delete');
+        Route::delete('/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Rooms Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can manage Room by create , search ,m  update , show and delete rooms
+    */
+
+    Route::group(['prefix' => 'rooms'], function () {
+        Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
+        Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
+        Route::get('', [RoomController::class, 'index'])->name('rooms.index');
+        Route::get('/{slug}', [RoomController::class, 'show'])->name('rooms.show');
+        Route::get('/{slug}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
+        Route::put('/{slug}', [RoomController::class, 'update'])->name('rooms.update');
+
+
+        Route::get('/remove/{slug}', [RoomController::class, 'remove'])->name('rooms.remove');
+        Route::post('/delete/{slug}', [RoomController::class, 'destroy'])->name('rooms.delete');
+    });
 
     Route::get('topics/', [TopicController::class, 'index'])->name('topics.index');
 
-    Route::get('topics/{id}/rooms', [RoomController::class, 'roomSearch'])->name('topics.rooms');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Messages Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can manage messages by update , show and delete messages
+    */
 
-    Route::get('rooms/edit/{slug}', [RoomController::class, 'edit'])->name('rooms.edit');
-    Route::put('rooms/{slug}', [RoomController::class, 'update'])->name('rooms.update');
-
-
-    Route::get('rooms/remove/{slug}', [RoomController::class, 'remove'])->name('rooms.remove');
-    Route::post('rooms/delete/{slug}', [RoomController::class, 'destroy'])->name('rooms.delete');
-
-    Route::post('messages/{slug}', [MessageController::class, 'store'])->name('message.store');
-    Route::post('messages/delete/{id}', [MessageController::class, 'destroy'])->name('message.destroy');
-});
-
-
-
-Route::get('notifiy', function () {
-    notify()->success("Ok");
-    return view('welcome');
+    Route::group(['prefix' => 'messages'], function () {
+        Route::post('/{slug}', [MessageController::class, 'store'])->name('message.store');
+        Route::post('/{id}/delete', [MessageController::class, 'destroy'])->name('message.destroy');
+    });
 
 });
+
+
+
+
+
+
+
+
+
+
 
 
 

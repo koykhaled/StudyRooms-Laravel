@@ -25,8 +25,8 @@
                     </label>
                 </form>
                 <div class="mobile-menuItems">
-                    <a class="btn btn--main btn--pill" href="{%url 'topics'%}">Browse Topics</a>
-                    <a class="btn btn--main btn--pill" href="{%url 'activity'%}">Recent Activities</a>
+                    <a class="btn btn--main btn--pill" href="{{route('topics.index')}}">Browse Topics</a>
+                    <a class="btn btn--main btn--pill" href="{{route('rooms.index')}}">Recent Activities</a>
                 </div>
             </div>
             <div class="roomList__header">
