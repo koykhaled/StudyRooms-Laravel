@@ -18,7 +18,7 @@
                     <span>{{$message->created_at}}</span>
                 </p>
             </a>
-            @if (Auth::id() == $message->user_id)
+            @if (auth()->user()->id == $message->user_id)
             <div class="roomListRoom__actions">
                 <a href="{{route('message.destroy',$message->id)}}"
                     onclick="event.preventDefault(); document.getElementById('delete_message').submit();"

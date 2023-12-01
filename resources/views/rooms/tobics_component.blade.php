@@ -4,7 +4,7 @@
     </div>
     <ul class="topics__list">
         <li>
-            <a href="{{route('rooms.index')}}" class="active">All <span>{{$topics_count}}</span></a>
+            <a href="{{route('topics.index')}}" class="active">All <span>{{$topics_count}}</span></a>
         </li>
         @foreach ($topics as $topic)
         <li>

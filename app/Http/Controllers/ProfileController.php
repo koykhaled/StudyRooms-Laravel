@@ -53,10 +53,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request, $id)
     {
+        $request->validated();
         $user = User::where('uuid', $id)->first();
-        $user->name = $request->name ?? $user->name;
-        $user->email = $request->email ?? $user->email;
-        $user->description = $request->description ?? $user->description;
+        $user->update($request->validated());
+        // $user->name = $request->name ?? $user->name;
+        // $user->email = $request->email ?? $user->email;
+        // $user->description = $request->description ?? $user->description;
         $this->uploadImage($request, "photo", $user, "profile/");
 
         if ($request->user()->isDirty('email')) {

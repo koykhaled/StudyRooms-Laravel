@@ -33,7 +33,7 @@
 
         <ul class="topics__list">
           <li>
-            <a href="/" class="active">All <span>{{$topics_count}}</span></a>
+            <a href="/" class="active">All <span>{{count($topics)}}</span></a>
           </li>
           @foreach ($topics as $topic)
           <li>

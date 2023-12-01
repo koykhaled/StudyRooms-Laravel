@@ -9,10 +9,10 @@
 
         {{--
         <!-- Room List Start --> --}}
-        
+
         <div class="roomList">
             <div class="mobile-menu">
-                <form action="{% url 'home' %}" method="get" class="header__search">
+                <form action="{{route('rooms.index')}}" method="get" class="header__search">
                     <label>
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 32 32">
@@ -32,7 +32,7 @@
             <div class="roomList__header">
                 <div>
                     <h2>Study Room</h2>
-                    <p>{{$room_count}} Rooms available</p>
+                    <p>{{count($rooms)}} Rooms available</p>
                 </div>
                 <a class="btn btn--main" href="{{route('rooms.create')}}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">

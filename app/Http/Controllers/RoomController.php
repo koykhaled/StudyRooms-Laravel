@@ -25,7 +25,6 @@ class RoomController extends Controller
         if ($request->has('topic_id')) {
             $id = $request->query('topic_id');
             $rooms = $init_room->where('topic_id', $id)->get();
-
         } elseif ($request->has('q')) {
             $q = $request->query('q');
             $rooms = $this->search($q);
@@ -33,11 +32,10 @@ class RoomController extends Controller
             $rooms = $init_room->get();
         }
 
-        $room_count = count($rooms);
         $topics = Topic::withCount('rooms')->limit(3)->get();
         $topics_count = count(Topic::all());
         $messages = Message::with('room', 'user')->orderBy("created_at", "desc")->limit(3)->get();
-        return view('index', compact('rooms', 'room_count', 'topics', 'topics_count', "messages"));
+        return view('index', compact('rooms', 'topics', 'topics_count', "messages"));
     }
 
     /**
@@ -45,8 +43,8 @@ class RoomController extends Controller
      */
     public function create()
     {
-        $topics = Topic::all();
-        return view('rooms.room_form', compact('topics'));
+        return view('rooms.room_form')
+            ->with('topics', Topic::all());
     }
 
     /**
@@ -54,8 +52,7 @@ class RoomController extends Controller
      */
     public function store(RoomRequest $request)
     {
-        //
-        $user = User::find(Auth::id());
+        $user = auth()->user();
         $topic = Topic::where('name', $request->topic)->first();
         if ($user) {
             $user->rooms()->create([

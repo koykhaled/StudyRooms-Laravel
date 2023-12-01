@@ -13,8 +13,6 @@ class TopicController extends Controller
     {
         //
         $topics = Topic::withCount('rooms')->get();
-        $topics_count = count($topics);
-
-        return view('topics.topics', compact('topics', 'topics_count'));
+        return view('topics.topics', compact('topics'));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -10,6 +11,7 @@ class HomeController extends Controller
 
     public function redirect()
     {
-        return to_route('rooms.index');
+        if (Auth::id())
+            return to_route('rooms.index');
     }
 }
