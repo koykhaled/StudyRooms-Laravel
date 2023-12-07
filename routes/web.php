@@ -5,6 +5,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\UserController;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -26,15 +27,9 @@ use Illuminate\Support\Facades\Route;
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-/*
-|--------------------------------------------------------------------------
-| Profile Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can manage user profile by update , show and delete user profile
-*/
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [HomeController::class, 'redirect']);
+    Route::get('/', [HomeController::class, 'redirect'])->name('/');
 
     /*
     |--------------------------------------------------------------------------
@@ -64,9 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
     */
 
     Route::group(['prefix' => 'rooms'], function () {
-        Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
-        Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
         Route::get('', [RoomController::class, 'index'])->name('rooms.index');
+        Route::get('/create', [RoomController::class, 'create'])->name('rooms.create')->middleware('check_admin');
+        Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
         Route::get('/{slug}', [RoomController::class, 'show'])->name('rooms.show');
         Route::get('/{slug}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
         Route::put('/{slug}', [RoomController::class, 'update'])->name('rooms.update');
@@ -90,6 +85,29 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'messages'], function () {
         Route::post('/{slug}', [MessageController::class, 'store'])->name('message.store');
         Route::post('/{id}/delete', [MessageController::class, 'destroy'])->name('message.destroy');
+    });
+
+
+    Route::group(['prefix' => 'dashboard', 'middleware' => ['check_admin']], function () {
+        Route::get('', [HomeController::class, 'dashboard'])->name('dashboard');
+
+
+        Route::group(['prefix' => 'topics'], function () {
+            Route::get('', [TopicController::class, 'topics'])->name('admin.topics');
+            Route::get('/create', [TopicController::class, 'create'])->name('admin.topics.create');
+            Route::post('', [TopicController::class, 'store'])->name('admin.topics.store');
+            Route::delete('/{id}', [TopicController::class, 'destroy'])->name('admin.topics.delete');
+        });
+
+
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('', [UserController::class, 'index'])->name('admin.users');
+
+            Route::get('/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+            Route::put('/{id}', [UserController::class, 'update'])->name('admin.users.update');
+
+            Route::delete('/{id}', [UserController::class, 'destroy'])->name('admin.users.delete');
+        });
     });
 
 });

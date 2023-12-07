@@ -36,4 +36,9 @@ class Topic extends Model
     {
         $this->attributes['name'] = strtolower($value);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

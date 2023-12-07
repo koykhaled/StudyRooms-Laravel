@@ -68,4 +68,16 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Room::class, 'participants', 'room_id', 'user_id');
     }
+
+
+    public function hasRole($role = "admin")
+    {
+        return $this->role == $role;
+    }
+
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }

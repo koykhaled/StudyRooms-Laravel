@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         notify()->success('Login Done Successfully');
 
-        return to_route('rooms.index');
+        return to_route('/');
     }
 
     /**

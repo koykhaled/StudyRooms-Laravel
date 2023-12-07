@@ -15,8 +15,6 @@
 
     @include('layouts.navbar')
 
-    @yield('dashboard')
-
     @yield('index')
 
     @yield('room_form')
