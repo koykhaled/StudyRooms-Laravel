@@ -165,4 +165,29 @@ class RoomController extends Controller
         $rooms = RoomResource::collection($results);
         return $rooms;
     }
+
+    /**
+     * ================= Dashboard => Rooms ===================
+     */
+
+    public function rooms()
+    {
+        $rooms = Room::withCount('participants')->get();
+        $rooms_count = Room::count();
+
+        return view('admin.rooms.index', compact('rooms', 'rooms_count'));
+    }
+
+    public function delete_room($id)
+    {
+        $room = Room::find($id);
+        if ($room) {
+            $room->delete();
+            notify()->success('Room Deleted Successfuly');
+            return to_route('admin.rooms');
+        } else {
+            notify()->error('Room Not Found');
+            return to_route('admin.rooms');
+        }
+    }
 }

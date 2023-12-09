@@ -4,36 +4,29 @@
         <div class="details">
             <div class="topic__header">
                 <div>
-                    <h2>Topics</h2>
-                    <p> {{ $topics_count }} Topics</p>
+                    <h2>Rooms</h2>
+                    <p> {{ $rooms_count }} rooms</p>
                 </div>
-                <a class="btn btn--main" href="{{ route('admin.topics.create') }}">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                        <title>add</title>
-                        <path
-                            d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
-                        </path>
-                    </svg>
-                    Create Topic
-                </a>
             </div>
             <div class="topics">
                 <div class="cardHeader">
-                    @if ($topics_count > 0)
+                    @if ($rooms_count > 0)
                         <table>
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Participants</td>
                                     <td>Action</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($topics as $topic)
+                                @forelse ($rooms as $room)
                                     <tr>
-                                        <td>{{ $topic->name }}</td>
+                                        <td>{{ $room->name }}</td>
+                                        <td>{{ $room->participants_count }}</td>
                                         <td>
                                             {{-- <button class="btn-edit" type="submit">Edit</button> --}}
-                                            <form action="{{ route('admin.topics.delete', $topic->id) }}" method="post">
+                                            <form action="{{ route('admin.rooms.delete', $room->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn-delete" type="submit">Delete</button>
@@ -44,7 +37,7 @@
                             </tbody>
                         </table>
                     @else
-                        <p class="empty">There is No Topics Yet</p>
+                        <p class="empty">There is No rooms Yet</p>
                     @endif
                 </div>
             </div>

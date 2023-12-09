@@ -1,31 +1,23 @@
+<div class="topbar">
 
-    <div class="topbar">
-    
-        <div class="toggle">
-            <ion-icon name="menu-outline"></ion-icon>
-        </div>
-        <div class="search">
-            <label for="">
-                <input type="text" placeholder="Search">
-                <ion-icon name="search-outline"></ion-icon>
-            </label>
-        </div>
-        <!-- ========== Admin Profile ========= -->
-        <div class="user">
-            {{-- <img src="{{asset('assets/avatar.svg')}}" alt=""> --}}
-    
-            @auth
-            <a href="{{route('profile.show',auth()->user()->uuid)}}">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- ========== Admin Profile ========= -->
+    <div class="user">
+        {{-- <img src="{{asset('assets/avatar.svg')}}" alt=""> --}}
+
+        @auth
+            <a href="{{ route('profile.show', auth()->user()->uuid) }}">
                 <div class="avatar avatar--medium active">
                     @if (auth()->user()->photo == null)
-                    <img src="{{asset('assets/avatar.svg')}}" />
+                        <img src="{{ asset('assets/avatar.svg') }}" />
                     @else
-                    <img src="{{asset(auth()->user()->photo)}}" />
+                        <img src="{{ asset(auth()->user()->photo) }}" />
                     @endif
                 </div>
-                <p>{{auth()->user()->name}}<span>{{auth()->user()->email}}</span></p>
+                <p>{{ auth()->user()->name }}<span>{{ auth()->user()->email }}</span></p>
             </a>
-            @endauth
-        </div>
+        @endauth
     </div>
-
+</div>

@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="{{ route('admin.rooms') }}">
                 <span class="icon">
                     <ion-icon name="book-outline"></ion-icon>
                 </span>
@@ -31,7 +31,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="{{ route('admin.participants') }}">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
@@ -47,12 +47,23 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="{{ route('admin.messages') }}">
                 <span class="icon">
                     <ion-icon name="chatbubbles-outline"></ion-icon>
                 </span>
                 <span class="title">Messages</span>
             </a>
+        </li>
+        <li>
+            <a title="logout" href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span
+                    class="icon">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </span>
+                <span class="title">Logout</span></a>
+            <form id="logout-form" action="{{ route('logout') }}" method="post">
+                @csrf
+            </form>
         </li>
     </ul>
 </div>

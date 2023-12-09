@@ -4,36 +4,34 @@
         <div class="details">
             <div class="topic__header">
                 <div>
-                    <h2>Topics</h2>
-                    <p> {{ $topics_count }} Topics</p>
+                    <h2>Messages</h2>
+                    <p> {{ count($messages) }} Messages</p>
                 </div>
-                <a class="btn btn--main" href="{{ route('admin.topics.create') }}">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                        <title>add</title>
-                        <path
-                            d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
-                        </path>
-                    </svg>
-                    Create Topic
-                </a>
             </div>
             <div class="topics">
                 <div class="cardHeader">
-                    @if ($topics_count > 0)
+                    <x-notify::notify />
+                    @if (count($messages) > 0)
                         <table>
                             <thead>
                                 <tr>
-                                    <td>Name</td>
+                                    <td>User</td>
+                                    <td>Message</td>
+                                    <td>Room</td>
+                                    <td>Created_at</td>
                                     <td>Action</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($topics as $topic)
+                                @forelse ($messages as $message)
                                     <tr>
-                                        <td>{{ $topic->name }}</td>
+                                        <td>{{ $message->user->name }}</td>
+                                        <td>{{ $message->message }}</td>
+                                        <td>{{ $message->room->name }}</td>
+                                        <td>{{ $message->created_at }}</td>
                                         <td>
                                             {{-- <button class="btn-edit" type="submit">Edit</button> --}}
-                                            <form action="{{ route('admin.topics.delete', $topic->id) }}" method="post">
+                                            <form action="{{ route('admin.messages.delete', $message->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn-delete" type="submit">Delete</button>
@@ -44,7 +42,7 @@
                             </tbody>
                         </table>
                     @else
-                        <p class="empty">There is No Topics Yet</p>
+                        <p class="empty">There is No Messages Yet</p>
                     @endif
                 </div>
             </div>

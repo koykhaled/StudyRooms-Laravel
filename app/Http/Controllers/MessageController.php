@@ -40,6 +40,20 @@ class MessageController extends Controller
             $room->participants()->detach($user->id);
         }
         return to_route('rooms.show', $room->slug);
+    }
 
+    public function messages()
+    {
+        $messages = Message::with('user', 'room')->orderBy('created_at', 'desc')->get();
+        return view('admin.messages.index', compact('messages'));
+    }
+
+    public function delete_message($id)
+    {
+        $message = Message::where('id', $id)->first();
+        $message->delete();
+
+        notify()->success('Message Deleted Successfuly');
+        return to_route('admin.messages');
     }
 }

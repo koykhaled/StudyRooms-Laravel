@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ParticipentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TopicController;
@@ -88,6 +89,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can manage messages by update , show and delete messages
+    */
     Route::group(['prefix' => 'dashboard', 'middleware' => ['check_admin']], function () {
         Route::get('', [HomeController::class, 'dashboard'])->name('dashboard');
 
@@ -107,6 +115,22 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
             Route::delete('/{id}', [UserController::class, 'destroy'])->name('admin.users.delete');
+        });
+
+        Route::group(['prefix' => 'rooms'], function () {
+            Route::get('', [RoomController::class, 'rooms'])->name('admin.rooms');
+            Route::delete('/{id}', [UserController::class, 'delete_room'])->name('admin.rooms.delete');
+        });
+
+        Route::group(['prefix' => 'participants'], function () {
+            Route::get('', [ParticipentsController::class, 'index'])->name('admin.participants');
+            Route::delete('/{id}', [ParticipentsController::class, 'destroy'])->name('admin.participants.delete');
+        });
+
+
+        Route::group(['prefix' => 'messages'], function () {
+            Route::get('', [MessageController::class, 'messages'])->name('admin.messages');
+            Route::delete('/{id}', [MessageController::class, 'delete_message'])->name('admin.messages.delete');
         });
     });
 

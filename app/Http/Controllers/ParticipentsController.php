@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Participents;
+use App\Models\Message;
+use App\Models\Participant;
 use Illuminate\Http\Request;
 
 class ParticipentsController extends Controller
@@ -13,53 +14,19 @@ class ParticipentsController extends Controller
     public function index()
     {
         //
+        $participants = Participant::with('user', 'room')->get();
+        return view("admin.participants.index", compact("participants"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Participents $participents)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Participents $participents)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Participents $participents)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Participents $participents)
-    {
-        //
+        $participant = Participant::find($id);
+        $participant->delete();
+        if (Message::where("user_id", $participant->user->id)->count() > 0) {
+            Message::where("user_id", $participant->user->id)->delete();
+        }
+        notify()->success("Participant Deleted Successfuly");
+        return to_route('admin.participants');
     }
 }

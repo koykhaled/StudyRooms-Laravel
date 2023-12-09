@@ -387,7 +387,9 @@ body{
     font-weight: 500;
 }
 
-
+button,a{
+    margin-left: 10px;
+}
 
 .btn--main {
     background-color: var(--color-dark-light);
@@ -432,15 +434,24 @@ p.empty {
     padding: 10px;
 }
 
-.details .topics table tr td:last-child{
-    text-align: end;
-}
+
 .details .topics table tr td:nth-child(2){
+    text-align: center;
+}
+.details .topics table tr td:nth-child(3){
     text-align: end;
 }
 
+.details .topics table tr td:nth-child(4){
+    text-align: end;
+}
+
+.details .topics table tr td:last-child{
+    text-align: center;
+}
+
 button{
-    margin: 5px;
+    margin-left: 5px;
 }
 
 .btn--main {
