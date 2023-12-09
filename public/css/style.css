@@ -103,6 +103,8 @@ a {
   opacity: 0.9;
 }
 
+
+
 .btn--dark {
   background-color: var(--color-dark-light);
   color: var(--color-light);
@@ -122,6 +124,10 @@ a {
   color: var(--color-main);
   background: transparent;
   border: 2px solid var(--color-main);
+}
+
+.btn--delete{
+  color: var(--color-error);
 }
 
 .action-button {
@@ -427,7 +433,7 @@ a {
   max-width: 48rem;
   min-height: 40rem;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -46%);
   background-color: var(--color-dark);

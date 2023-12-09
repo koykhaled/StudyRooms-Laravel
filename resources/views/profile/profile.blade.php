@@ -26,12 +26,11 @@
                     <p><span>@</span>{{$user->name}}</p>
                     @if (request()->user() ==$user)
                     <a href="{{route('profile.edit',$user->uuid)}}" class="btn btn--main btn--pill">Edit Profile</a>
-                    <a href="{{route('profile.delete',$user->uuid)}}" class="btn btn--main btn--pill"
-                        style="color: red;">Delete
+                    <a href="{{route('profile.delete',$user->uuid)}}" class="btn btn--main btn--pill btn--delete">Delete
                         Profile</a>
                     @endif
                 </div>
-                <div class="profile__about">
+                <div class=" profile__about">
                     <h3>About</h3>
                     <p>
                         {{$user->description}}
