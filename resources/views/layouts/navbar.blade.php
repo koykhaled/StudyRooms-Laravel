@@ -22,15 +22,15 @@
 
             <div class="header__user">
                 @auth
-                    <a href="{{ route('profile.show', auth()->user()->uuid) }}">
-                        <div class="avatar avatar--medium active">
-                            @if (auth()->user()->photo == null)
-                                <img src="{{ asset('assets/avatar.svg') }}" />
-                            @else
-                                <img src="{{ asset(auth()->user()->photo) }}" />
-                            @endif
-                        </div>
-                        <p>{{ auth()->user()->name }}<span>{{ auth()->user()->email }}</span></p>
+                <a href="{{ route('profile.show', auth()->user()->uuid) }}">
+                    <div class="avatar avatar--medium active">
+                        @if (auth()->user()->photo == null)
+                        <img src="{{ asset('assets/avatar.svg') }}" />
+                        @else
+                        <img src="{{ asset(auth()->user()->photo) }}" />
+                        @endif
+                    </div>
+                    <p>{{ auth()->user()->name }}<span>{{ auth()->user()->email }}</span></p>
                     @endauth
                 </a>
                 <button class="dropdown-button">

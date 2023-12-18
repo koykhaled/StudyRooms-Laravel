@@ -1,7 +1,7 @@
 @include('layouts.main')
 <main class="update-account layout">
     <div class="container">
-        <div class="layout__box" id="edit_box">
+        <div class="layout__box edit__profile" id="edit_box">
             <div class="layout__boxHeader">
                 <div class="layout__boxTitle">
                     <a href="{{route('profile.show',$user->id)}}">

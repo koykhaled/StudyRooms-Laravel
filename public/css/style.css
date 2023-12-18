@@ -433,13 +433,16 @@ a {
   max-width: 48rem;
   min-height: 40rem;
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -46%);
   background-color: var(--color-dark);
   border-radius: 1rem;
   box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+.edit__profile{
+  top: 60%;
 }
 
 .layout__boxHeader {

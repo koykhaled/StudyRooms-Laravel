@@ -23,13 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-Route::group(['middleware' => ['auth', 'security']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [HomeController::class, 'redirect'])->name('/');
 
     /*
@@ -61,7 +56,7 @@ Route::group(['middleware' => ['auth', 'security']], function () {
 
     Route::group(['prefix' => 'rooms'], function () {
         Route::get('', [RoomController::class, 'index'])->name('rooms.index');
-        Route::get('/create', [RoomController::class, 'create'])->name('rooms.create')->middleware('check_admin');
+        Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
         Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
         Route::get('/{slug}', [RoomController::class, 'show'])->name('rooms.show');
         Route::get('/{slug}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
@@ -135,16 +130,6 @@ Route::group(['middleware' => ['auth', 'security']], function () {
     });
 
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
