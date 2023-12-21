@@ -67,9 +67,9 @@
                         <a href="{{route('profile.show',$room->user->uuid)}}" class="room__author">
                             <div class="avatar avatar--small">
                                 @if ($room->user->photo == null)
-                                <img src="{{asset('assets/avatar.svg')}}" />
+                                <img src="{{secure_asset('assets/avatar.svg')}}" />
                                 @else
-                                <img src="{{asset($room->user->photo)}}" />
+                                <img src="{{secure_asset($room->user->photo)}}" />
                                 @endif
                             </div>
                             <span>{{$room->user->name}}</span>
@@ -89,9 +89,9 @@
                                     <a href="{{route('profile.show',$message->user_id)}}" class="thread__authorInfo">
                                         <div class="avatar avatar--small">
                                             @if ($message->user->photo == null)
-                                            <img src="{{asset('assets/avatar.svg')}}" />
+                                            <img src="{{secure_asset('assets/avatar.svg')}}" />
                                             @else
-                                            <img src="{{asset($message->user->photo)}}" />
+                                            <img src="{{secure_asset($message->user->photo)}}" />
                                             @endif
                                         </div>
                                         <span>{{$message->user->name}}</span>
@@ -144,9 +144,9 @@
                 <a href="{{route('profile.show',$participant)}}" class="participant">
                     <div class="avatar avatar--medium">
                         @if ($participant->photo == null)
-                        <img src="{{asset('assets/avatar.svg')}}" />
+                        <img src="{{secure_asset('assets/avatar.svg')}}" />
                         @else
-                        <img src="{{asset($participant->photo)}}" />
+                        <img src="{{secure_asset($participant->photo)}}" />
                         @endif
                     </div>
                     <p>

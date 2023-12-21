@@ -8,9 +8,9 @@
             <a href="{{route('profile.show',$message->user->uuid)}}" class="roomListRoom__author">
                 <div class="avatar avatar--small">
                     @if ($message->user->photo == null)
-                    <img src="{{asset('assets/avatar.svg')}}" />
+                    <img src="{{secure_asset('assets/avatar.svg')}}" />
                     @else
-                    <img src="{{asset($message->user->photo)}}" />
+                    <img src="{{secure_asset($message->user->photo)}}" />
                     @endif
                 </div>
                 <p>

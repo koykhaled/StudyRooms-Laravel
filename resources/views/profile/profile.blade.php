@@ -15,9 +15,9 @@
                 <div class="profile__avatar">
                     <div class="avatar avatar--large active">
                         @if ($user->photo == null)
-                        <img src="{{asset('assets/avatar.svg')}}" />
+                        <img src="{{secure_asset('assets/avatar.svg')}}" />
                         @else
-                        <img src="{{asset($user->photo)}}" />
+                        <img src="{{secure_asset($user->photo)}}" />
                         @endif
                     </div>
                 </div>

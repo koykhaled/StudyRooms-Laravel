@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('delete_room')
-    
+
 <main class="delete-item layout">
     <div class="container">
         <div class="layout__box">

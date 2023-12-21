@@ -47,11 +47,6 @@
             @include('rooms.room_component')
             <x-notify::notify />
         </div>
-        {{-- Room List End --}}
-
-        {{-- Activities Start --}}
-        @include('rooms.active_component')
-        {{-- Activities End --}}
     </div>
 </main>
 @endsection
