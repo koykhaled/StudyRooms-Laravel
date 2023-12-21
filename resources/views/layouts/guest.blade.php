@@ -13,7 +13,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    <link rel="shortcut icon" href="{{asset('assets/favicon.ico')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{secure_asset('assets/favicon.ico')}}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}" />
 </head>
 
