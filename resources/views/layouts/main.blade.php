@@ -32,7 +32,6 @@
 
     <script src="{{ secure_asset('js/script.js') }}"></script>
     <script src="{{ secure_asset('vendor/mckenziearts/laravel-notify/js/notify.js') }}"></script>
-    {{-- @notifyJs --}}
 </body>
 
 </html>

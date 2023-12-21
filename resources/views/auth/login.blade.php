@@ -57,7 +57,7 @@
                     <x-notify::notify />
                 </div>
             </div>
-            @notifyJs
+            <script src="{{ secure_asset('vendor/mckenziearts/laravel-notify/js/notify.js') }}"></script>
         </div>
     </main>
 </x-guest-layout>
