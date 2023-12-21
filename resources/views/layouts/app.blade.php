@@ -26,11 +26,11 @@
 
 
 
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ secure_asset('js/script.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="{{ asset('js/dashboard/main.js') }}"></script>
-    @notifyJs
+    <script src="{{ secure_asset('js/script.js') }}"></script>
+    <script src="{{ secure_asset('vendor/mckenziearts/laravel-notify/js/notify.js') }}"></script>
 </body>
 
 </html>
