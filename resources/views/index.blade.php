@@ -12,7 +12,7 @@
 
             <div class="roomList">
                 <div class="mobile-menu">
-                    <form action="{{ route('rooms.index') }}" method="get" class="header__search">
+                    <form action="{{ secure_url('rooms.index') }}" method="get" class="header__search">
                         <label>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                 viewBox="0 0 32 32">
