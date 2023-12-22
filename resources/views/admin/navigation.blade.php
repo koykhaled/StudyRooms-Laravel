@@ -2,7 +2,7 @@
     <ul>
         <li>
             <a href="{{ route('rooms.index') }}" class="header__logo">
-                <img src="{{ asset('assets/logo.svg') }}" />
+                <img src="{{ secure_asset('assets/logo.svg') }}" />
                 <h2>Study Rooms</h2>
             </a>
         </li>

@@ -1,7 +1,7 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="{{route('dashboard')}}" class="header__logo">
-            <img src="{{asset('assets/logo.svg')}}" />
+            <img src="{{secure_asset('assets/logo.svg')}}" />
             <h1>Dashboard</h1>
         </a>
 

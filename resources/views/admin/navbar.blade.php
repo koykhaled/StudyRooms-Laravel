@@ -9,9 +9,9 @@
         @auth
         <div class="avatar avatar--medium active">
             @if (auth()->user()->photo == null)
-            <img src="{{ asset('assets/avatar.svg') }}" />
+            <img src="{{ secure_asset('assets/avatar.svg') }}" />
             @else
-            <img src="{{ asset(auth()->user()->photo) }}" />
+            <img src="{{ secure_asset(auth()->user()->photo) }}" />
             @endif
         </div>
         <p>{{ auth()->user()->name }}<span>{{ auth()->user()->email }}</span></p>

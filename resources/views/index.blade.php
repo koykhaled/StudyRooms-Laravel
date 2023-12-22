@@ -50,7 +50,7 @@
             </div>
 
             {{-- Topics Start --}}
-            @include('rooms.active__component')
+            @include('rooms.active_component')
             {{--
         <!-- Topics End --> --}}
 

@@ -1,7 +1,7 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="{{ route('rooms.index') }}" class="header__logo">
-            <img src="{{ asset('assets/logo.svg') }}" />
+            <img src="{{ secure_asset('assets/logo.svg') }}" />
             <h1>Study Rooms</h1>
         </a>
         <form class="header__search" method="get" action="{{ route('rooms.index') }}">
