@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Trait;
+namespace App\Http\Controllers;
 
 trait UploadImageTrait
 {
