@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
     */
 
     Route::group(['prefix' => 'rooms'], function () {
-        Route::get('', [RoomController::class, 'index'])->name('rooms.index');
+        Route::get('', [RoomController::class, 'index'])->name('rooms.index')->secure();
         Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
         Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
         Route::get('/{slug}', [RoomController::class, 'show'])->name('rooms.show');
