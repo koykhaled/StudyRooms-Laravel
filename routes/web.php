@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'secure']], function () {
     Route::get('/', [HomeController::class, 'redirect'])->name('/');
 
     /*
